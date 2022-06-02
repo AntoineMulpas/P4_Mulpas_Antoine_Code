@@ -8,10 +8,7 @@ import com.parkit.parkingsystem.model.Ticket;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Timestamp;
+import java.sql.*;
 
 public class TicketDAO {
 
@@ -86,4 +83,34 @@ public class TicketDAO {
         }
         return false;
     }
+
+    public boolean discountTicket(String vehiculeRegNum) {
+        Connection con = null;
+        try {
+            con = dataBaseConfig.getConnection();
+            PreparedStatement ps = con.prepareStatement(DBConstants.COUNT_TICKET);
+            ps.setString(1, vehiculeRegNum);
+            ResultSet rs = ps.executeQuery();
+            int count = 0;
+            while(rs.next()) {
+                if (rs.getString(3).equals(vehiculeRegNum)) {
+                    count++;
+                }
+            }
+            if (count > 1) {
+                return true;
+            }
+            return false;
+        } catch (Exception e) {
+            logger.error("Error counting the ticket.", e);
+        } finally {
+            dataBaseConfig.closeConnection(con);
+        }
+        return false;
+    }
+
+    public boolean isDiscount(Ticket ticket) {
+        return discountTicket(ticket.getVehicleRegNumber());
+    }
+
 }

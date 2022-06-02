@@ -1,6 +1,7 @@
 package com.parkit.parkingsystem.service;
 
 import com.parkit.parkingsystem.constants.Fare;
+import com.parkit.parkingsystem.dao.TicketDAO;
 import com.parkit.parkingsystem.model.Ticket;
 import java.util.concurrent.TimeUnit;
 
@@ -9,6 +10,9 @@ public class FareCalculatorService {
 
     private final int HALF_AN_HOUR = 30;
     private final int AN_HOUR = 60;
+    private final double DISCOUNT = 0.95;
+    private static TicketDAO ticketDAO = new TicketDAO();
+
 
 
     public void calculateFare(Ticket ticket){
@@ -23,30 +27,45 @@ public class FareCalculatorService {
 
 
 
+
+        boolean discount = ticketDAO.isDiscount(ticket);
         long durationMinutes = Math.abs(TimeUnit.MINUTES.convert((inHour - outHour), TimeUnit.MILLISECONDS));
+        long duration = Math.abs(TimeUnit.HOURS.convert(durationMinutes, TimeUnit.MINUTES));
 
         if (durationMinutes <= HALF_AN_HOUR) {
             ticket.setPrice(0);
-        } else if (durationMinutes < AN_HOUR) {
+        } else {
             switch (ticket.getParkingSpot().getParkingType()) {
                 case CAR: {
-                    ticket.setPrice((durationMinutes * Fare.CAR_RATE_PER_HOUR) / AN_HOUR );
+                    if (discount) {
+                        if (durationMinutes < AN_HOUR) {
+                            ticket.setPrice(((durationMinutes * Fare.CAR_RATE_PER_HOUR) / AN_HOUR) * DISCOUNT);
+                        } else {
+                            ticket.setPrice((duration * Fare.CAR_RATE_PER_HOUR) * DISCOUNT);
+                        }
+                    } else {
+                        if (durationMinutes < AN_HOUR) {
+                            ticket.setPrice((durationMinutes * Fare.CAR_RATE_PER_HOUR) / AN_HOUR);
+                        } else {
+                            ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
+                        }
+                    }
                     break;
                 }
                 case BIKE: {
-                    ticket.setPrice((durationMinutes * Fare.BIKE_RATE_PER_HOUR) / AN_HOUR );
-                    break;
-                }
-        }} else {
-
-            long duration = Math.abs(TimeUnit.HOURS.convert(durationMinutes, TimeUnit.MINUTES));
-            switch (ticket.getParkingSpot().getParkingType()) {
-                case CAR: {
-                    ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
-                    break;
-                }
-                case BIKE: {
-                    ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
+                    if (discount) {
+                        if (durationMinutes < AN_HOUR) {
+                            ticket.setPrice(((durationMinutes * Fare.BIKE_RATE_PER_HOUR) / AN_HOUR) * DISCOUNT);
+                        } else {
+                            ticket.setPrice((duration * Fare.BIKE_RATE_PER_HOUR) * DISCOUNT);
+                        }
+                    } else {
+                        if (durationMinutes < AN_HOUR) {
+                            ticket.setPrice((durationMinutes * Fare.BIKE_RATE_PER_HOUR) / AN_HOUR);
+                        } else {
+                            ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
+                        }
+                    }
                     break;
                 }
                 default:
@@ -54,4 +73,6 @@ public class FareCalculatorService {
             }
         }
     }
+
+
 }
