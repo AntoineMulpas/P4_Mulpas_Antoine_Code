@@ -7,7 +7,10 @@ import com.parkit.parkingsystem.model.ParkingSpot;
 import com.parkit.parkingsystem.model.Ticket;
 import com.parkit.parkingsystem.service.ParkingService;
 import com.parkit.parkingsystem.util.InputReaderUtil;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -16,6 +19,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import static org.mockito.Mockito.*;
@@ -25,6 +29,7 @@ public class ParkingServiceTest {
 
     private static ParkingService parkingService;
 
+
     @Mock
     private static InputReaderUtil inputReaderUtil;
     @Mock
@@ -32,6 +37,8 @@ public class ParkingServiceTest {
     @Mock
     private static TicketDAO ticketDAO;
 
+    @Mock
+    private static ParkingSpot parkingSpot;
 
     @BeforeEach
     private void setUpPerTest() {
@@ -61,14 +68,22 @@ public class ParkingServiceTest {
     }
 
     @Test
-    public void processEnteringVehicleTest() {
+    public void processIncomingVehicleTest() throws SQLException, ClassNotFoundException {
         when(inputReaderUtil.readSelection()).thenReturn(1);
         when(parkingSpotDAO.getNextAvailableSlot(any())).thenReturn(1);
         parkingService.processIncomingVehicle();
-
-        verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
+        try {
+            verify(ticketDAO, Mockito.times(1)).saveTicket(any(Ticket.class));
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
+    @Test
+    @Disabled
+    public void processIncomingVehicleTestCatchException() {
+
+    }
 
     @Test
     public void getVehiculeTypeThrowsIllegalArgumentException() {
@@ -82,10 +97,6 @@ public class ParkingServiceTest {
         assertEquals(ParkingType.BIKE, parkingService.getVehichleType());
     }
 
-    /*
-    @Test
-    public void processIncomingVehiculeThrowsException() {
-}
 
-     */
+
 }
