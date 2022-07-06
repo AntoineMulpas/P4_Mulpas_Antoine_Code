@@ -13,6 +13,7 @@ public class Ticket {
     public Ticket() {
     }
 
+
     public int getId() {
         return id;
     }
