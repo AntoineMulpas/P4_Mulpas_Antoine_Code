@@ -1,0 +1,12 @@
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/constants/FareTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/constants/DBConstantsTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/dao/ParkingSpotDAOTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/model/TicketTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/FareCalculatorServiceTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/ParkingServiceTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/util/InputReaderUtilTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/model/ParkingSpotTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/integration/config/DataBaseTestConfig.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/integration/service/DataBasePrepareService.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/dao/TicketDAOTest.java
+/Users/antoinemulpas/Documents/OpenClassrooms/parkingsystem-master/src/test/java/com/parkit/parkingsystem/integration/ParkingDataBaseIT.java
