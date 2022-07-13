@@ -48,10 +48,6 @@ public class ParkingDataBaseIT {
         when(inputReaderUtil.readVehicleRegistrationNumber()).thenReturn(vehicleRegNumber);
     }
 
-    @AfterAll
-    private static void tearDown(){
-        dataBasePrepareService.clearDataBaseEntries();
-    }
 
     @Test
     @Order(1)
@@ -59,7 +55,7 @@ public class ParkingDataBaseIT {
         when(inputReaderUtil.readSelection()).thenReturn(1);
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
         parkingService.processIncomingVehicle();
-        //TODO: check that a ticket is actualy saved in DB and Parking table is updated with availability
+        //TODO: check that a ticket is actually saved in DB and Parking table is updated with availability
         assertTrue(ticketDAO.getTicket(vehicleRegNumber).getVehicleRegNumber().equals(vehicleRegNumber));
         assertNotEquals(parkingSpotDAO.getNextAvailableSlot(ParkingType.CAR), 1);
     }
