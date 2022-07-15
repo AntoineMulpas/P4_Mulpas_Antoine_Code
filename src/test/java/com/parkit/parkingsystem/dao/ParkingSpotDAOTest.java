@@ -26,9 +26,7 @@ class ParkingSpotDAOTest {
 
     @Test
     void getNextAvailableSlot() throws SQLException, ClassNotFoundException {
-        int nextAvailableSlot = underTest.getNextAvailableSlot(ParkingType.CAR);
-        System.out.println(nextAvailableSlot);
-        assertEquals(1, nextAvailableSlot);
+        assertTrue(underTest.getNextAvailableSlot(ParkingType.CAR) != 0);
     }
 
 

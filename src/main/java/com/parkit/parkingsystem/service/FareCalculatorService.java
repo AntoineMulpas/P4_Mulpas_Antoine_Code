@@ -76,6 +76,9 @@ public class FareCalculatorService {
 
     private boolean isDiscount(Ticket ticket) {
         boolean discount = ticketDAO.isDiscount(ticket);
+        if (discount) {
+            System.out.println("Welcome back! As a recurring user of our parking lot, you'll benefit from a 5% discount.");
+        }
         return discount;
     }
 

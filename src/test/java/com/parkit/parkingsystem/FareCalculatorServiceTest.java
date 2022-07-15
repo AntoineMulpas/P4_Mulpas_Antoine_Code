@@ -203,7 +203,7 @@ public class FareCalculatorServiceTest {
     }
 
     @Test
-    public void calculateFareCarForLesThanHalfAnHourParkingTimeRecurrentUser(){
+    public void calculateFareCarForLessThanHalfAnHourParkingTimeRecurrentUser(){
         Date inTime = new Date();
         inTime.setTime(System.currentTimeMillis() - ( 28 * 60 * 1000));
         Date outTime = new Date();

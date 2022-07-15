@@ -18,7 +18,6 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class ParkingDataBaseIT {
 
     private static DataBaseTestConfig dataBaseTestConfig = new DataBaseTestConfig();
@@ -50,7 +49,6 @@ public class ParkingDataBaseIT {
 
 
     @Test
-    @Order(1)
     public void testParkingACar() throws SQLException, ClassNotFoundException {
         when(inputReaderUtil.readSelection()).thenReturn(1);
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
@@ -61,10 +59,11 @@ public class ParkingDataBaseIT {
     }
 
     @Test
-    @Order(2)
     public void testParkingLotExit() throws SQLException, ClassNotFoundException, InterruptedException {
         Thread.sleep(100);
+        when(inputReaderUtil.readSelection()).thenReturn(1);
         ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+        parkingService.processIncomingVehicle();
         parkingService.processExitingVehicle();
         //TODO: check that the fare generated and out time are populated correctly in the database
         assertEquals(0.0 ,ticketDAO.getTicket(vehicleRegNumber).getPrice());
